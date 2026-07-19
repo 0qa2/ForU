@@ -4,40 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Text Heart</title>
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
-    <div id="ui">
-        <div class="love_horizontal" style="--i:1;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:2;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:3;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:4;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:5;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:6;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:7;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:8;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:9;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:10;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:11;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:12;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:13;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:14;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:15;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:16;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:17;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:18;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:19;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:20;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:21;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:22;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:23;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:24;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:25;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:26;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:27;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:28;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:29;"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i:30;"><span class="love_word">i love you</span></div>
-    </div>
+
+    <div id="ui"></div>
+
+    <script>
+        const ui = document.getElementById('ui');
+        const layers = 30; // Creates dense 3D depth
+
+        for (let i = 0; i < layers; i++) {
+            // Calculate the angle around the circle
+            const pct = i / layers;
+            const angle = pct * Math.PI * 2;
+
+            // Mathematical Heart Equation (Parametric formula)
+            const x = 16 * Math.pow(Math.sin(angle), 3);
+            const y = 13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle);
+
+            // Scale values to create the width/height
+            const scaleX = x * 10;
+            const scaleY = -y * 10; // Invert to face right-side up
+            const posZ = (i - layers / 2) * 6; // Stack layers vertically in 3D space
+
+            // Create the container element for each line of text
+            const container = document.createElement('div');
+            container.className = 'love_horizontal';
+            
+            // Lock the exact coordinates into 3D space
+            container.style.transform = `translateX(${scaleX}px) translateY(${scaleY}px) translateZ(${posZ}px)`;
+
+            container.innerHTML = '<span class="love_word">i love you</span>';
+            ui.appendChild(container);
+        }
+    </script>
 </body>
 </html>
