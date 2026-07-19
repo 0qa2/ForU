@@ -8,38 +8,37 @@ body {
     align-items: center;
     overflow: hidden;
     font-family: sans-serif;
-    perspective: 2000px; 
+    /* Sets the camera distance for the 3D grid */
+    perspective: 1000px; 
 }
 
 #ui {
     position: relative;
     transform-style: preserve-3d;
-    transform: rotateX(60deg) rotateZ(-20deg);
-    animation: rotateCamera 10s infinite linear;
+    /* Spins the entire calculated heart structure seamlessly */
+    animation: rotateCamera 12s infinite linear;
 }
 
 #ui .love_horizontal {
     position: absolute;
     transform-style: preserve-3d;
-    /* Calculates the Y angle for a circle (360 degrees divided by 30 layers = 12deg) */
-    --angle: calc(var(--i) * 12deg);
-    
-    /* This formula changes the depth based on the angle to create the heart indentation */
-    transform: rotateY(var(--angle)) translateZ(calc(150px + 40px * sin(var(--angle)))) translateY(calc(var(--i) * -3px));
 }
 
 #ui .love_word {
     color: #ea80b0;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
-    text-shadow: 0 0 10px #fff, 0 0 20px #ea80b0;
+    text-shadow: 0 0 8px #fff, 0 0 15px #ea80b0;
     white-space: nowrap;
     display: inline-block;
     position: absolute;
-    left: -50px;
-    transform: rotateX(-60deg); /* Tilts text up toward the viewer */
+    left: -40px;
+    top: -10px;
+    /* Tilts individual words up so they read flat toward the screen */
+    transform: rotateX(-45deg); 
 }
 
+/* Smooth continuous 3D camera rotation */
 @keyframes rotateCamera {
     0% {
         transform: rotateX(65deg) rotateY(0deg) rotateZ(-15deg);
@@ -49,12 +48,9 @@ body {
     }
 }
 
-/* Mobile responsive fixes */
+/* Scales the heart down slightly on small mobile screens */
 @media (max-width: 600px) {
     #ui .love_word {
-        font-size: 0.8rem;
-    }
-    #ui .love_horizontal {
-        transform: rotateY(var(--angle)) translateZ(calc(90px + 25px * sin(var(--angle)))) translateY(calc(var(--i) * -2px));
+        font-size: 0.75rem;
     }
 }
