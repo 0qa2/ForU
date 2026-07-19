@@ -13,7 +13,7 @@ body {
     width: 90vw;
     max-width: 500px;
     height: auto;
-    /* This locks the heart in place but tilts it sideways just like the video */
+    /* Keeps the heart shape perfectly still, but tilts it sideways */
     transform: rotate(-25deg); 
 }
 
@@ -23,30 +23,26 @@ svg {
     overflow: visible;
 }
 
-/* Base style for the path (hidden so you only see the text) */
 #heart-path {
     fill: none;
     stroke: transparent;
 }
 
-/* Glowing text styling matching your original image */
 .heart-text {
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 18px;
-    fill: #ea80b0; /* Pink text color */
-    letter-spacing: 3px;
-    /* Creates the white glowing overlay effect */
-    filter: drop-shadow(0px 0px 6px rgba(255, 255, 255, 0.8)); 
+    font-size: 16px;
+    fill: #ea80b0; /* Pink text */
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px #fff; /* White glow overlay */
 }
 
-/* This targets the text path and forces it to animate along the heart line */
+/* This targets the text and moves it smoothly along the heart path */
 textPath {
-    animation: flowText 12s linear infinite;
+    animation: walkText 10s linear infinite;
 }
 
-/* The animation that moves the text offset continuously forward */
-@keyframes flowText {
+@keyframes walkText {
     0% {
         startOffset: 0%;
     }
@@ -55,9 +51,9 @@ textPath {
     }
 }
 
-/* Make font sizes adapt perfectly on mobile screens */
+/* Mobile responsive font sizing */
 @media (max-width: 600px) {
     .heart-text {
-        font-size: 14px;
+        font-size: 13px;
     }
 }
