@@ -8,28 +8,33 @@
 </head>
 <body>
 
-    <div id="ui">
-        <div class="love_horizontal" style="--i: 1"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 2"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 3"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 4"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 5"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 6"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 7"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 8"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 9"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 10"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 11"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 12"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 13"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 14"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 15"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 16"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 17"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 18"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 19"><span class="love_word">i love you</span></div>
-        <div class="love_horizontal" style="--i: 20"><span class="love_word">i love you</span></div>
-    </div>
+    <div id="ui"></div>
 
+    <script>
+        const ui = document.getElementById('ui');
+        const totalLayers = 30; // More layers make it look smoother!
+
+        for (let i = 0; i < totalLayers; i++) {
+            const angle = (i / totalLayers) * Math.PI * 2;
+            
+            // Mathematical heart shape formula (Parametric Heart Equation)
+            const x = 16 * Math.pow(Math.sin(angle), 3);
+            const y = 13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle);
+            
+            // Scale the math up so it's big enough to see
+            const xPos = x * 12;
+            const yPos = -y * 12; // Flip Y so the heart is right side up
+
+            // Create the layer
+            const layer = document.createElement('div');
+            layer.className = 'love_horizontal';
+            
+            // Position each layer exactly along the heart path
+            layer.style.transform = `translateX(${xPos}px) translateY(${yPos}px) translateZ(${i * 2 - 30}px)`;
+            
+            layer.innerHTML = '<span class="love_word">i love you</span>';
+            ui.appendChild(layer);
+        }
+    </script>
 </body>
 </html>
