@@ -14,63 +14,64 @@ body {
 #ui {
     position: relative;
     transform-style: preserve-3d;
-    animation: rotateCamera 12s infinite linear;
+    animation: rotateCamera 14s infinite linear;
 }
 
 #ui .love_horizontal {
     position: absolute;
     transform-style: preserve-3d;
-    /* Pushes each layer upward vertically to give the heart height */
-    transform: translateY(calc(var(--i) * -5px));
+    /* Pushes text out in a circle based on its index number */
+    transform: rotateY(calc(var(--i) * 18deg)) translateZ(120px);
+    animation: shapeToHeart 4s infinite ease-in-out alternate;
 }
 
 #ui .love_word {
     color: #ea80b0;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: bold;
     text-shadow: 0 0 10px #fff;
     white-space: nowrap;
     display: inline-block;
-    position: absolute;
-    left: -50px;
-    
-    /* Applies the heart shaping animation */
-    animation: formHeart 12s infinite ease-in-out;
+    transform: rotateX(70deg);
 }
 
 @keyframes rotateCamera {
     0% {
-        transform: rotateX(65deg) rotateY(0deg) rotateZ(-15deg);
+        transform: rotateX(65deg) rotateY(0deg) rotateZ(-10deg);
     }
     100% {
-        transform: rotateX(65deg) rotateY(360deg) rotateZ(-15deg);
+        transform: rotateX(65deg) rotateY(360deg) rotateZ(-10deg);
     }
 }
 
-/* This manual mapping alters the depth (translateZ) dynamically 
-  based on the index of each layer, squeezing the bottom ring 
-  and expanding the top lobes.
-*/
-@keyframes formHeart {
-    0%, 100% {
-        transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(60px + var(--i) * 3px)) rotateX(20deg);
+/* Dynamically alters the height and width of each layer 
+   to squeeze the bottom into a point and flare the top lobes */
+@keyframes shapeToHeart {
+    0% {
+        /* Circular ring state */
+        top: 0px;
     }
-    50% {
-        transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(110px - var(--i) * 2px)) rotateX(-15deg);
+    100% {
+        /* Morph into heart state using the layer index to adjust dimensions */
+        top: calc(var(--i) * -6px);
+        transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(60px + var(--i) * 3px));
     }
 }
 
-/* Mobile viewport adjustments */
 @media (max-width: 600px) {
     #ui .love_word {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
-    @keyframes formHeart {
-        0%, 100% {
-            transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(40px + var(--i) * 2px)) rotateX(20deg);
+    #ui .love_horizontal {
+        transform: rotateY(calc(var(--i) * 18deg)) translateZ(80px);
+    }
+    @keyframes shapeToHeart {
+        0% {
+            top: 0px;
         }
-        50% {
-            transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(75px - var(--i) * 1.5px)) rotateX(-15deg);
+        100% {
+            top: calc(var(--i) * -4px);
+            transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(40px + var(--i) * 2px));
         }
     }
 }
