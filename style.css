@@ -1,51 +1,63 @@
 body {
     margin: 0;
     padding: 0;
-    background: #000;
-    height: 100vh;
+    background-color: #000;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
     overflow: hidden;
+}
+
+.heart-container {
+    width: 90vw;
+    max-width: 500px;
+    height: auto;
+    /* This locks the heart in place but tilts it sideways just like the video */
+    transform: rotate(-25deg); 
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* Base style for the path (hidden so you only see the text) */
+#heart-path {
+    fill: none;
+    stroke: transparent;
+}
+
+/* Glowing text styling matching your original image */
+.heart-text {
     font-family: sans-serif;
-    perspective: 1200px;
+    font-weight: bold;
+    font-size: 18px;
+    fill: #ea80b0; /* Pink text color */
+    letter-spacing: 3px;
+    /* Creates the white glowing overlay effect */
+    filter: drop-shadow(0px 0px 6px rgba(255, 255, 255, 0.8)); 
 }
 
-#ui {
-    position: relative;
-    transform-style: preserve-3d;
-    animation: rotateCamera 15s infinite linear;
+/* This targets the text path and forces it to animate along the heart line */
+textPath {
+    animation: flowText 12s linear infinite;
 }
 
-#ui .love_word {
-    color: #ea80b0;
-    font-size: 1.1rem;
-    text-shadow: 0 0 8px #fff;
-    letter-spacing: 2px;
-    white-space: nowrap;
-    display: inline-block;
-    /* This tilts the words slightly to give it that 3D ribbon look */
-    transform: rotateX(70deg) rotateZ(-30deg); 
-}
-
-#ui .love_horizontal {
-    position: absolute;
-    transform-style: preserve-3d;
-}
-
-/* This handles the global spinning camera and tilts the whole thing sideways */
-@keyframes rotateCamera {
+/* The animation that moves the text offset continuously forward */
+@keyframes flowText {
     0% {
-        transform: rotateX(65deg) rotateY(0deg) rotateZ(-20deg);
+        startOffset: 0%;
     }
     100% {
-        transform: rotateX(65deg) rotateY(360deg) rotateZ(-20deg);
+        startOffset: 100%;
     }
 }
 
-/* Shrink text slightly for smaller phone screens */
+/* Make font sizes adapt perfectly on mobile screens */
 @media (max-width: 600px) {
-    #ui .love_word {
-        font-size: 0.8rem;
+    .heart-text {
+        font-size: 14px;
     }
 }
