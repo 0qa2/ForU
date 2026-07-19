@@ -8,70 +8,53 @@ body {
     align-items: center;
     overflow: hidden;
     font-family: sans-serif;
-    perspective: 1000px; 
+    perspective: 2000px; 
 }
 
 #ui {
     position: relative;
     transform-style: preserve-3d;
-    animation: rotateCamera 14s infinite linear;
+    transform: rotateX(60deg) rotateZ(-20deg);
+    animation: rotateCamera 10s infinite linear;
 }
 
 #ui .love_horizontal {
     position: absolute;
     transform-style: preserve-3d;
-    /* Pushes text out in a circle based on its index number */
-    transform: rotateY(calc(var(--i) * 18deg)) translateZ(120px);
-    animation: shapeToHeart 4s infinite ease-in-out alternate;
+    /* Calculates the Y angle for a circle (360 degrees divided by 30 layers = 12deg) */
+    --angle: calc(var(--i) * 12deg);
+    
+    /* This formula changes the depth based on the angle to create the heart indentation */
+    transform: rotateY(var(--angle)) translateZ(calc(150px + 40px * sin(var(--angle)))) translateY(calc(var(--i) * -3px));
 }
 
 #ui .love_word {
     color: #ea80b0;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    text-shadow: 0 0 10px #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px #ea80b0;
     white-space: nowrap;
     display: inline-block;
-    transform: rotateX(70deg);
+    position: absolute;
+    left: -50px;
+    transform: rotateX(-60deg); /* Tilts text up toward the viewer */
 }
 
 @keyframes rotateCamera {
     0% {
-        transform: rotateX(65deg) rotateY(0deg) rotateZ(-10deg);
+        transform: rotateX(65deg) rotateY(0deg) rotateZ(-15deg);
     }
     100% {
-        transform: rotateX(65deg) rotateY(360deg) rotateZ(-10deg);
+        transform: rotateX(65deg) rotateY(360deg) rotateZ(-15deg);
     }
 }
 
-/* Dynamically alters the height and width of each layer 
-   to squeeze the bottom into a point and flare the top lobes */
-@keyframes shapeToHeart {
-    0% {
-        /* Circular ring state */
-        top: 0px;
-    }
-    100% {
-        /* Morph into heart state using the layer index to adjust dimensions */
-        top: calc(var(--i) * -6px);
-        transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(60px + var(--i) * 3px));
-    }
-}
-
+/* Mobile responsive fixes */
 @media (max-width: 600px) {
     #ui .love_word {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
     #ui .love_horizontal {
-        transform: rotateY(calc(var(--i) * 18deg)) translateZ(80px);
-    }
-    @keyframes shapeToHeart {
-        0% {
-            top: 0px;
-        }
-        100% {
-            top: calc(var(--i) * -4px);
-            transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(40px + var(--i) * 2px));
-        }
+        transform: rotateY(var(--angle)) translateZ(calc(90px + 25px * sin(var(--angle)))) translateY(calc(var(--i) * -2px));
     }
 }
