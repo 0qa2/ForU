@@ -1,59 +1,79 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #000;
+    background: #000;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     overflow: hidden;
-}
-
-.heart-container {
-    width: 90vw;
-    max-width: 500px;
-    height: auto;
-    /* Keeps the heart shape perfectly still, but tilts it sideways */
-    transform: rotate(-25deg); 
-}
-
-svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-}
-
-#heart-path {
-    fill: none;
-    stroke: transparent;
-}
-
-.heart-text {
     font-family: sans-serif;
+    /* Creates the 3D depth perception */
+    perspective: 1000px; 
+}
+
+#ui {
+    position: relative;
+    transform-style: preserve-3d;
+    /* This makes the whole heart rotate continuously in 3D space */
+    animation: rotateCamera 12s infinite linear;
+}
+
+#ui .love_horizontal {
+    position: absolute;
+    transform-style: preserve-3d;
+    /* Pushes each layer upward slightly to build the height of the heart */
+    transform: translateY(calc(var(--i) * -6px));
+}
+
+#ui .love_word {
+    color: #ea80b0;
+    font-size: 1.2rem;
     font-weight: bold;
-    font-size: 16px;
-    fill: #ea80b0; /* Pink text */
-    letter-spacing: 2px;
-    text-shadow: 0 0 8px #fff; /* White glow overlay */
+    text-shadow: 0 0 10px #fff;
+    white-space: nowrap;
+    display: inline-block;
+    position: absolute;
+    left: -50px;
+    
+    /* This connects all layers together and forces them into a heart shape */
+    animation: formHeart 12s infinite ease-in-out;
 }
 
-/* This targets the text and moves it smoothly along the heart path */
-textPath {
-    animation: walkText 10s linear infinite;
-}
-
-@keyframes walkText {
+/* Global 3D camera spinning movement */
+@keyframes rotateCamera {
     0% {
-        startOffset: 0%;
+        transform: rotateX(60deg) rotateY(0deg) rotateZ(-10deg);
     }
     100% {
-        startOffset: 100%;
+        transform: rotateX(60deg) rotateY(360deg) rotateZ(-10deg);
     }
 }
 
-/* Mobile responsive font sizing */
+/* This mathematical calculation forces the circular layers to flare 
+  at the top and pinch tightly at the bottom, creating a true 3D heart structure.
+*/
+@keyframes formHeart {
+    0%, 100% {
+        transform: rotateY(calc(var(--i) * 18deg)) translateZ(120px) rotateX(20deg);
+    }
+    50% {
+        /* Bends the text lines inward/outward to shape the lobes */
+        transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(90px + (var(--i) * 2px))) rotateX(-15deg);
+    }
+}
+
+/* Keeps it scaled perfectly for mobile phones */
 @media (max-width: 600px) {
-    .heart-text {
-        font-size: 13px;
+    #ui .love_word {
+        font-size: 0.85rem;
+    }
+    @keyframes formHeart {
+        0%, 100% {
+            transform: rotateY(calc(var(--i) * 18deg)) translateZ(75px) rotateX(20deg);
+        }
+        50% {
+            transform: rotateY(calc(var(--i) * 18deg)) translateZ(calc(55px + (var(--i) * 1.5px))) rotateX(-15deg);
+        }
     }
 }
